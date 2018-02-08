@@ -1,21 +1,27 @@
 'use strict'
 
-function listenForKeystroke(event) {
-  console.log('in event listener');
+function listenForKeyboard() {
   $('.keys').on('keydown',(event) => {
-    console.log('weee',event.keyCode);
-   highlightKey(event.keyCode);
+    highlightKey(event.keyCode);
+    findSound(event.keyCode);
  })
- $('.keys').on('keyup',(event) => {
-  console.log('wwhoaaa',event.keyCode);
+  $('.keys').on('keyup',(event) => {
   removeHighlight(event.keyCode);
-})
+  })
+}
+
+function findSound(keyCode) {
+  const mySound = $(`audio[data-key='${keyCode}']`)
+  console.log(mySound);
+  mySound.trigger('play');
 }
 
 function highlightKey(keyCode){
-  $(`.keys`).find(`[data-key=${keyCode}]`).addClass('playing');
+  $(`[data-key=${keyCode}]`).addClass('playing');
 }
+
 function removeHighlight(keyCode) {
-  $(`.keys`).find(`[data-key=${keyCode}]`).removeClass('playing');
+  $(`[data-key=${keyCode}]`).removeClass('playing');
 }
-$(document).ready(listenForKeystroke());
+
+$(document).ready(listenForKeyboard());
